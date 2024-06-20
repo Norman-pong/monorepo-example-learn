@@ -1,0 +1,14 @@
+{
+  "name": "monorepo-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "author": "norman_pong <pangzhiming@sunniwell.net>",
+  "license": "MIT",
+  "dependencies": {
+    "lerna": "^8.1.3"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
