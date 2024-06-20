@@ -1,9 +1,9 @@
 {
-  "name": "monorepo-react",
+  "name": "monorepo-react-learn",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
-  "author": "norman_pong <pangzhiming@sunniwell.net>",
+  "author": "norman_pong <zhiming3399@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "lerna": "^8.1.3"
