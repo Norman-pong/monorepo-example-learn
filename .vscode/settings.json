@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.txt": "markdown",
+    "*.md": "markdown",
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    "*.html": "html",
+    "*.py": "python",
+    "windows.h": "c"
+  }
+}
