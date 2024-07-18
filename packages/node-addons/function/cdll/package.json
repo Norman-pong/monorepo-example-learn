@@ -1,0 +1,13 @@
+{
+  "name": "cdll",
+  "version": "1.0.0",
+  "description": "c invoke dll",
+  "main": "napi_op2p.cjs",
+  "author": "<norman zhiming3399@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test:build": "node-gyp configure build && node napi_op2p.cjs",
+    "test": "node ./napi_op2p.cjs"
+  }
+}

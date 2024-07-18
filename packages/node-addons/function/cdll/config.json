@@ -1,0 +1,26 @@
+{
+  "clientConfig": {
+    "managerAddr": "https://share-saa.sunniwell.net",
+    "deviceSystemEndpoint": "",
+    "productID": "",
+    "deviceID": "2BF7D61D-FFAF-4604-A772-50E3CB3083FF",
+    "deviceSecret": "",
+    "isServer": false,
+    "listernUDPPort": 51800,
+    "logLevel": "debug",
+    "server": null,
+    "client": {
+      "peerDeviceID": "qt97i7ss.1777531850850734082",
+      "tcpPortAgents": [
+        {
+          "localAddr": "0.0.0.0:37896",
+          "remotePort": 8876
+        },
+        {
+          "localAddr": "0.0.0.0:55933",
+          "remotePort": 8879
+        }
+      ]
+    }
+  }
+}
