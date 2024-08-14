@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoom Effect</title>
+  <style>
+    body{
+      position: relative;
+    }
+    #trigger {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      cursor: pointer;
+    }
+
+    .zoomElement {
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      position: fixed;
+      top: 10px;
+      left: 0%;
+      transform: translate(0%, 0%) scale(0);
+      transition: transform 0.3s ease-in-out;
+      transform-origin: left;
+    }
+
+    .zoomed {
+      transform: translate(50%, 50%) scale(1);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="trigger">Click me</div>
+  <div class="zoomElement">Zoom me</div>
+  <script>
+    document.getElementById('trigger').addEventListener('click', function (event) {
+      const zoomElement = document.querySelector('.zoomElement');
+      // zoomElement.style.top = `${event.clientY }px`;
+      // zoomElement.style.left = `${event.clientX + 100}px`;
+      zoomElement.classList.add('zoomed');
+    });
+  </script>
+</body>
+
+</html>

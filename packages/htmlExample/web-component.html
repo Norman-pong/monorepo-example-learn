@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script defer
+    src="https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_33918_103.cc5e864148fb2a4c637264743e24ee1d.js"></script>
+  <script>
+    class MyButton extends HTMLElement {
+      constructor() {
+        super(); // 调用父类的构造函数
+        this.attachShadow({ mode: 'open' }); // 创建 Shadow DOM
+      }
+
+      click() {
+        alert('Hello, World!');
+      }
+
+      connectedCallback() {
+        this.render();
+        this.shadowRoot.querySelector('button').addEventListener('click', () => this.click());
+      }
+
+      render() {
+        this.shadowRoot.innerHTML = `
+          <style>
+            button {
+              padding: 10px 20px;
+              border: none;
+              border-radius: 5px;
+              background-color: #007BFF;
+              color: white;
+              cursor: pointer;
+            }
+          </style>
+          <button>
+            <slot></slot> <!-- 使用 slot 分发内容 -->
+          </button>
+        `;
+      }
+    }
+    customElements.define('my-button', MyButton);
+  </script>
+  <script>
+    function reactive(data) {
+      return new Proxy(data, {
+        get(target, property, receiver) {
+          return Reflect.get(target, property, receiver);
+        },
+        set(target, property, value, receiver) {
+          target[property] = value;
+          // 假设有一个方法来更新 DOM
+          updateDOM();
+          return true;
+        }
+      });
+    }
+
+    function updateDOM() {
+      console.log('DOM')
+      // 更新 DOM 的逻辑
+    }
+
+    class ReactiveComponent extends HTMLElement {
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+      }
+
+      connectedCallback() {
+        this.data = reactive({ count: 0 });
+        this.shadowRoot.innerHTML = `
+            <style>
+              /* 样式 */
+            </style>
+            <div>Count: <span id="count"></span></div>
+            <button id="increment">Increment</button>
+          `;
+        this.shadowRoot.querySelector('#count').textContent = this.data.count;
+        this.shadowRoot.querySelector('#increment').addEventListener('click', () => {
+          this.data.count++; // 这将触发 DOM 更新
+          // this.shadowRoot.querySelector('#count').textContent = this.data.count;
+          console.log(this.data.count);
+        });
+      }
+    }
+
+    customElements.define('reactive-component', ReactiveComponent);
+  </script>
+</head>
+
+<body>
+  <my-button>
+    <span>click me</span>
+  </my-button>
+  <reactive-component></reactive-component>
+  <iconpark-icon title="item-close" name="item-close" size="16" />
+
+</body>
+
+</html>

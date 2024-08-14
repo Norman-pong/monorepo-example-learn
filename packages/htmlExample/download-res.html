@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Progress</title>
+  <style>
+    #progress-container {
+      width: 100%;
+      background-color: #f3f3f3;
+    }
+    #progress-bar {
+      width: 0;
+      height: 30px;
+      background-color: #4caf50;
+      text-align: center;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="progress-container">
+    <div id="progress-bar">0%</div>
+  </div>
+  <button id="download-button">Download</button>
+  <script>
+    document.getElementById('download-button').addEventListener('click', () => {
+      downloadFile('https://share-saa.sunniwell.net/v1/saa/sharefile/1802622280110374914/xxx/nas_files/c.audio/xxxxxxxxxxx%20.ape?rp=qt97i7ss.1777531850850734085&shareCode=gKb7KWapDlPpD7pONzYtpSIz');
+    });
+
+    async function downloadFile(url) {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to download file: ${response.statusText}`);
+      }
+
+      const contentLength = response.headers.get('content-length');
+      if (!contentLength) {
+        throw new Error('Content-Length header is missing');
+      }
+
+      const total = parseInt(contentLength, 10);
+      let loaded = 0;
+
+      const reader = response.body.getReader();
+      const stream = new ReadableStream({
+        start(controller) {
+          function push() {
+            reader.read().then(({ done, value }) => {
+              if (done) {
+                controller.close();
+                return;
+              }
+              loaded += value.byteLength;
+              const percentComplete = (loaded / total) * 100;
+              const progressBar = document.getElementById('progress-bar');
+              progressBar.style.width = percentComplete + '%';
+              progressBar.textContent = percentComplete.toFixed(2) + '%';
+              controller.enqueue(value);
+              push();
+            }).catch(error => {
+              console.error('Error reading stream', error);
+              controller.error(error);
+            });
+          }
+          push();
+        }
+      });
+
+      const responseStream = new Response(stream);
+      const blob = await responseStream.blob();
+      const urlBlob = URL.createObjectURL(blob);
+      console.log('Download complete');
+      URL.revokeObjectURL(urlBlob); // Release the object URL when done
+    }
+  </script>
+</body>
+</html>

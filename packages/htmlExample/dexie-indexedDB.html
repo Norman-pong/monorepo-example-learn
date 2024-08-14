@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<body>
+  <h1>Dexie.js</h1>
+  <p>Open the console to see the output</p>
+
+  <button onClick="addFriends()">add</button>
+  <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+  <script>
+    const db = new Dexie('FriendDatabase');
+    db.version(1).stores({
+      friends: '++id, age'
+    });
+
+    const addFriends = () => {
+      db.friends.add({ name: 'norman', age: 18 }).then(() => {
+        return db.friends
+          .where('age')
+          .below(30)
+          .toArray();
+      }).then(youngFriends => {
+        alert(`My young friends: ${JSON.stringify(youngFriends)}`);
+      }).catch(e => {
+        alert(`Oops: ${e}`);
+      });
+    }
+  </script>
+</body>
+</head>
+
+</html>

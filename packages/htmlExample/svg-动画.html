@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Animation Example</title>
+  <style>
+    svg {
+      width: 100px;
+      height: 100px;
+    }
+    circle {
+      fill: red;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        r: 20;
+        fill: red;
+      }
+      50% {
+        r: 30;
+        fill: blue;
+      }
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="20" />
+  </svg>
+</body>
+</html>
