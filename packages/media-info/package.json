@@ -1,0 +1,12 @@
+{
+  "name": "media-info",
+  "version": "1.0.0",
+  "description": "test nodejs get file metadata",
+  "main": "index.js",
+  "author": "norman <zhiming3399@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "fluent-ffmpeg": "^2.1.3"
+  }
+}

@@ -3,3 +3,7 @@ cache*
 dist/*
 
 build/*
+
+out
+!assets/.gitkeep
+assets/*
