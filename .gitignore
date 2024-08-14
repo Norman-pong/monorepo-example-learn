@@ -6,4 +6,4 @@ build/*
 
 out
 !assets/.gitkeep
-assets/*
+assets/
