@@ -2,11 +2,15 @@
   "name": "media-info",
   "version": "1.0.0",
   "description": "test nodejs get file metadata",
-  "main": "index.js",
+  "main": "index.mjs",
+  "repository": "https://github.com/Norman-pong/monorepo-example-learn/packages/htmlExample",
   "author": "norman <zhiming3399@gmail.com>",
   "license": "MIT",
   "private": false,
   "dependencies": {
     "fluent-ffmpeg": "^2.1.3"
+  },
+  "scripts": {
+    "media:start": "node index.mjs"
   }
 }
