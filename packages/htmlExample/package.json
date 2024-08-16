@@ -1,0 +1,15 @@
+{
+  "name": "htmlExample",
+  "version": "1.0.0",
+  "description": "html example",
+  "main": "index.js",
+  "repository": "https://github.com/Norman-pong/monorepo-example-learn/packages/htmlExample",
+  "author": "norman <zhiming3399@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "scripts": {
+    "html:start": "http-server ./src"
+  }
+}

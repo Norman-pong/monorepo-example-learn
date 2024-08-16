@@ -81,7 +81,7 @@
         this.shadowRoot.querySelector('#count').textContent = this.data.count;
         this.shadowRoot.querySelector('#increment').addEventListener('click', () => {
           this.data.count++; // 这将触发 DOM 更新
-          // this.shadowRoot.querySelector('#count').textContent = this.data.count;
+          this.shadowRoot.querySelector('#count').textContent = this.data.count;
           console.log(this.data.count);
         });
       }

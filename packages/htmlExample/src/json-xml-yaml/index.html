@@ -1,0 +1,125 @@
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+
+<body>
+  <style>
+    .flex {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+    }
+
+    .flex div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+    }
+  </style>
+  <h1>html 加载 json</h1>
+  <hr>
+  <div class="flex">
+    <div>
+      <h2>XML</h2>
+      <p>XML 扩展格式：DTD 定义文件是更古老的写法，现代 XML 应用更倾向于使用 XSD，因为它提供了更强大的功能和更好的数据验证能力。</p>
+      <table id="xml" border='1'> </table>
+      <h2>iframe 加载 XML</h2>
+      <iframe src="cd_catalog.xml" width="100%" height="600"></iframe>
+    </div>
+    <div>
+      <h2>JSON</h2>
+      <p>JSON 是一种轻量级的数据交换格式，易于阅读和编写。但是没有严格的结构化数据检验，面对更复杂的数据扩展性就呈现出劣势。</p>
+      <table id="json" border='1'> </table>
+      <h2>iframe 加载 JSON</h2>
+      <iframe src="cd_catalog.json" width="100%" height="600"></iframe>
+    </div>
+    <div>
+      <h2>YAML</h2>
+      <p>数据序列化，常用于配置文件和数据交换。易于阅读和编写，支持复杂的数据结构，如列表、字典等。tcp 传输中较少使用，和 JavaScript 交互需要安装 <code>js-yaml</code> 依赖</p>
+      <table id="yaml" border='1'> </table>
+      <h2>iframe 加载 YAML</h2>
+      <iframe src="cd_catalog.yaml" width="100%" height="600"></iframe>
+    </div>
+  </div>
+  <hr>
+
+
+  <script>
+    const getXML = () => {
+      const xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "cd_catalog.xml", false);
+      xmlhttp.send();
+      const xmlDoc = xmlhttp.responseXML;
+      // json 格式的数据
+      // const xmlDoc = JSON.parse(xmlhttp.responseText);
+      const table = document.getElementById("xml");
+      const tableHead = table.createTHead();
+      const tableCaption = table.createCaption();
+      const tableBody = document.createElement("tbody");
+      tableCaption.innerHTML = "使用 XMLHttpRequest 同步加载 XML";
+      tableHead.innerHTML = "<tr><th>艺术家</th><th>标题</th></tr>";
+
+      const x = xmlDoc.getElementsByTagName("CD");
+      for (i = 0; i < x.length; i++) {
+        tableBody.innerHTML += `
+      <tr>
+        <td>${x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue}</td>
+        <td>${x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue}</td>
+      </tr>`;
+      }
+      table.appendChild(tableBody);
+    }
+
+    const getJSON = () => {
+      // fetch 方法是 ES6 的新特性，用于替代 XMLHttpRequest 对象，用于请求网络资源。
+      fetch("cd_catalog.json")
+        .then(response => response.json())
+        .then(data => {
+          const list = data.CATALOG.CD;
+          const table = document.getElementById("json");
+          const tableHead = table.createTHead();
+          const tableCaption = table.createCaption();
+          const tableBody = document.createElement("tbody");
+          tableCaption.innerHTML = "使用 fetch API 异步加载 JSON";
+          tableHead.innerHTML = "<tr><th>艺术家</th><th>标题</th></tr>";
+          for (i = 0; i < list.length; i++) {
+            tableBody.innerHTML += "<tr><td>" + list[i].ARTIST + "</td><td>" + list[i].TITLE + "</td></tr>";
+          }
+          tableBody.innerHTML += "</hr>";
+          table.appendChild(tableBody);
+        })
+        .catch(error => console.log(error))
+    }
+
+    const getYaml = () => {
+
+      fetch("cd_catalog.yaml")
+        .then(response => response.text())
+        .then(data => {
+          const list = jsyaml.load(data).CATALOG.CD;
+          const table = document.getElementById("yaml");
+          const tableHead = table.createTHead();
+          const tableCaption = table.createCaption();
+          const tableBody = document.createElement("tbody");
+          tableCaption.innerHTML = "使用 fetch API / js-yaml 异步加载 yaml";
+          tableHead.innerHTML = "<tr><th>艺术家</th><th>标题</th></tr>";
+          for (i = 0; i < list.length; i++) {
+            tableBody.innerHTML += "<tr><td>" + list[i].ARTIST + "</td><td>" + list[i].TITLE + "</td></tr>";
+          }
+          tableBody.innerHTML += "</hr>";
+          table.appendChild(tableBody);
+        })
+        .catch(error => console.log(error))
+    }
+
+    getXML();
+    getJSON();
+    getYaml();
+  </script>
+</body>
+
+</html>
